@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import TextField from 'material-ui/TextField'
+import RaisedButton from 'material-ui/RaisedButton'
+
+import './Form.css'
 
 class Form extends Component {
   constructor(props) {
@@ -29,19 +33,31 @@ class Form extends Component {
     return (
       <div className="Form">
         <form onSubmit={this.handleSubmit}>
-          <label>
-            Coin Code
-            <input id="coin_code" type="text" value={this.state.coin_code} onChange={this.handleChange} />
-          </label>
-          <label>
-            Amount
-            <input id="amount" type="text" value={this.state.amount} onChange={this.handleChange} />
-          </label>
-          <label>
-            Bought At
-            <input id="bought_at" type="text" value={this.state.bought_at} onChange={this.handleChange} />
-          </label>
-          <input type="submit" value="submit" />
+          <TextField
+            hintText='eg. BTC'
+            floatingLabelText='coin code'
+            id="coin_code"
+            value={this.state.coin_code} 
+            onChange={this.handleChange}
+          />
+          <br/>
+          <TextField
+            hintText='eg. 100'
+            floatingLabelText='amount owned'
+            id="amount"
+            value={this.state.amount} 
+            onChange={this.handleChange}
+          />
+          <br/>
+          <TextField
+            hintText='eg. 2000'
+            floatingLabelText='original purchase price'
+            id="bought_at"
+            value={this.state.bought_at} 
+            onChange={this.handleChange}
+          />
+          <br/>
+          <RaisedButton label="Submit" type="submit" primary={true} />
         </form>
       </div>
     );

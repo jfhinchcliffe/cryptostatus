@@ -52,12 +52,16 @@ class Coin extends Component {
   
 
   render() {
+     
+
     const {
       current_value,
       initial_value,
       profit,
       loaded
     } = this.state
+
+    const textColor = profit < 0 ? 'loss' : 'profit'
 
     const {
       amount,
@@ -70,12 +74,13 @@ class Coin extends Component {
     </div>
 
     const coinInformation = <div className="Coin">
-      <h2>{coin_code} x {amount}</h2>
-      <ul>
-        <li>Initial Cost: AU$ {initial_value.toFixed(2)}</li>
-        <li>Current Value: AU$ {current_value.toFixed(2)}</li>
-      </ul>
-      <h3>Profit: AU$ {profit.toFixed(2)}</h3>
+      <h2>{amount} x {coin_code}</h2>
+        <p>
+          Initial Cost: AU$ {initial_value.toFixed(2)}
+          <br/>
+          Current Value: AU$ {current_value.toFixed(2)}
+        </p>
+      <h3 className={textColor}>Profit: AU$ {profit.toFixed(2)}</h3>
     </div>
 
     return ( !loaded ? loading : coinInformation );
