@@ -20,6 +20,7 @@ class Coin extends Component {
   }
 
   getValues = () => {
+    if (this.props.coin === '') return
     const { coin_code  } = this.props.coin
     const url = `https://min-api.cryptocompare.com/data/price?fsym=${coin_code}&tsyms=AUD`
     axios.get(url)
@@ -49,11 +50,7 @@ class Coin extends Component {
     })
   }
 
-  
-
   render() {
-     
-
     const {
       current_value,
       initial_value,
