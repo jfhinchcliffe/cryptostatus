@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Coin.css'
 import axios from 'axios'
+import { callCoinApi } from '../../utilities/api'
 
 class Coin extends Component {
   constructor(props) {
@@ -15,22 +16,14 @@ class Coin extends Component {
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.getValues()
   }
 
-  getValues = () => {
+  async getValues () {
     if (this.props.coin === '') return
-    const { coin_code  } = this.props.coin
-    const url = `https://min-api.cryptocompare.com/data/price?fsym=${coin_code}&tsyms=AUD`
-    axios.get(url)
-    .then((response) => {
-      this.setValues(response)  
-      console.log('res', response)
-    })
-    .catch((error) => {
-      console.log('er',error)
-    })
+    const coinInfo = await callCoinApi(this.props.coin.coin_code)
+    this.setValues(coinInfo)
   }
 
   setValues = response => {
@@ -65,20 +58,24 @@ class Coin extends Component {
       coin_code
     } = this.props.coin
 
-    const loading = <div className="spinner">
-      <div className="dot1"></div>
-      <div className="dot2"></div>
-    </div>
+    const loading = (
+      <div className="spinner">
+        <div className="dot1"></div>
+        <div className="dot2"></div>
+      </div>
+    )
 
-    const coinInformation = <div className="Coin">
-      <h2>{amount} x {coin_code}</h2>
-        <p>
-          Initial Cost: AU$ {initial_value.toFixed(2)}
-          <br/>
-          Current Value: AU$ {current_value.toFixed(2)}
-        </p>
-      <h3 className={textColor}>Profit: AU$ {profit.toFixed(2)}</h3>
-    </div>
+    const coinInformation = (
+      <div className="Coin">
+        <h2>{amount} x {coin_code}</h2>
+          <p>
+            Initial Cost: AU$ {initial_value.toFixed(2)}
+            <br/>
+            Current Value: AU$ {current_value.toFixed(2)}
+          </p>
+        <h3 className={textColor}>Profit: AU$ {profit.toFixed(2)}</h3>
+      </div>
+    )
 
     return ( !loaded ? loading : coinInformation );
   }
