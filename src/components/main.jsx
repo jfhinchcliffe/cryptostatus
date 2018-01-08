@@ -21,10 +21,17 @@ class Main extends Component {
 
     this.addCoin = this.addCoin.bind(this)
     this.toggleFormOpen = this.toggleFormOpen.bind(this)
+    this.updateTotal = this.updateTotal.bind(this)
   }
 
   componentDidMount() {
     this.setFromParams()
+  }
+
+  updateTotal(value) {
+    this.setState(prevState => ({
+      total_value: prevState.total_value + value
+    }))
   }
 
   setFromParams() {
@@ -94,13 +101,14 @@ class Main extends Component {
       </div>
     )
 
-    const coins = this.state.coins.map((coin, index) =>  <Coin key={`${index}-${coin.coin_code}`} coin={coin}/>)
+    const coins = this.state.coins.map((coin, index) =>  <Coin key={`${index}-${coin.coin_code}`} coin={coin} updateTotal={this.updateTotal}/>)
 
     const form = this.state.form_open ? <Form addCoin={this.addCoin} /> : ''
 
     return (
       <div className="Main">
-        <h2 className="header">CoinStatus</h2>
+        <h2 className="header">CoinStatus</h2> 
+        <h3 className="total-value">Total Value: AU$ {this.state.total_value.toFixed(2)}</h3>
         { form }
         { form_controls }
 

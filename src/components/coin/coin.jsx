@@ -34,6 +34,8 @@ class Coin extends Component {
     const current_value = coin_value * total_amount
     const initial_value = bought_at * total_amount
 
+    this.props.updateTotal(current_value)
+
     this.setState({
       coin_value,
       current_value,
