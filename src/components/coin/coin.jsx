@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './Coin.css'
 import axios from 'axios'
 import { callCoinApi } from '../../utilities/api'
+import { formatToMoney } from '../../utilities/coinHelper'
 
 class Coin extends Component {
   constructor(props) {
@@ -71,11 +72,11 @@ class Coin extends Component {
       <div className="Coin">
         <h2>{amount} x {coin_code}</h2>
           <p>
-            Initial Cost: AU$ {initial_value.toFixed(2)}
+            Initial Cost: { formatToMoney(initial_value) }
             <br/>
-            Current Value: AU$ {current_value.toFixed(2)}
+            Current Value: { formatToMoney(current_value) }
           </p>
-        <h3 className={textColor}>Profit: AU$ {profit.toFixed(2)}</h3>
+        <h3 className={textColor}>Profit: { formatToMoney(profit) }</h3>
       </div>
     )
 

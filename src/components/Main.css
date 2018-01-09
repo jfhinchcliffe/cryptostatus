@@ -1,13 +1,3 @@
 .Main {
-  text-align: center;
   font-family: 'Russo One';
-}
-
-.Main .header {
-  font-family: 'Russo One';
-}
-
-.Main .controls {
-  display: flex;
-  justify-content: center;
 }

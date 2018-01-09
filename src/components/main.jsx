@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import './Main.css'
 
+import { formatToMoney } from '../utilities/coinHelper'
+
 import Form from './form/form'
 import Coin from './coin/coin'
 
 import IconButton from 'material-ui/IconButton';
-import ActionTurnedIn from 'material-ui/svg-icons/action/turned-in';
-import ActionTurnedInNot from 'material-ui/svg-icons/action/turned-in-not';
-import ActionNoteAdd from 'material-ui/svg-icons/action/note-add';
+import UpArrowIcon from 'material-ui/svg-icons/navigation/expand-less';
+import DownArrowIcon from 'material-ui/svg-icons/navigation/expand-more';
+import LinkIcon from 'material-ui/svg-icons/content/link';
 
 class Main extends Component {
   constructor(props) {
@@ -82,6 +84,12 @@ class Main extends Component {
   }
 
   render() {
+    const {
+      form_open,
+      coins,
+      total_value
+    } = this.state
+
     const link = this.createLink()
 
     const styles = { width: 48, height: 48 }
@@ -90,30 +98,29 @@ class Main extends Component {
       <div className="controls">
         <div className="toggle">
           <IconButton iconStyle={ styles }> 
-            { this.state.form_open ? <ActionTurnedIn onClick={this.toggleFormOpen}/> : <ActionTurnedInNot onClick={this.toggleFormOpen} /> } 
+            { form_open ? <UpArrowIcon onClick={this.toggleFormOpen}/> : <DownArrowIcon onClick={this.toggleFormOpen} /> } 
           </IconButton>
         </div>  
         <div className="link">
           <IconButton iconStyle={ styles } href={link}> 
-            <ActionNoteAdd />
+            <LinkIcon />
           </IconButton>
         </div>
       </div>
     )
 
-    const coins = this.state.coins.map((coin, index) =>  <Coin key={`${index}-${coin.coin_code}`} coin={coin} updateTotal={this.updateTotal}/>)
+    const coin_sections = coins.map((coin, index) =>  <Coin key={`${index}-${coin.coin_code}`} coin={coin} updateTotal={this.updateTotal}/>)
 
-    const form = this.state.form_open ? <Form addCoin={this.addCoin} /> : ''
+    const form = form_open ? <Form addCoin={this.addCoin} /> : ''
 
     return (
       <div className="Main">
         <h2 className="header">CoinStatus</h2> 
-        <h3 className="total-value">Total Value: AU$ {this.state.total_value.toFixed(2)}</h3>
+        <h3 className="total-value">Total Value: {formatToMoney(total_value)}</h3>
         { form }
         { form_controls }
-
         <div className="Coins">
-          {coins}
+          {coin_sections}
         </div>
       </div>
     );
