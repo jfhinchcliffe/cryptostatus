@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './Main.css'
 
-import { formatToMoney } from '../utilities/coinHelper'
+import { formatToMoney, coinsFromUrlParser } from '../utilities/coinHelper'
+
 
 import Form from './form/form'
 import Coin from './coin/coin'
@@ -37,19 +38,10 @@ class Main extends Component {
   }
 
   setFromParams() {
-    let url_parts = window.location.href.split('?')
-    if (url_parts.length < 2) return
-    const root_url = url_parts.shift()
-    const sections = url_parts.map(section => section.split('&'))
-    sections.map(section => this.addCoinToState(section))
+    coinsFromUrlParser().map(coin => this.addCoinToState(coin))//this.addCoinToState(coin))
   }
 
-  addCoinToState(coin_section) {
-    let coin = {
-      amount:coin_section[1],
-      bought_at:coin_section[2],
-      coin_code: coin_section[0]
-    }
+  addCoinToState(coin) {
     this.setState(prevState => ({
       form_open: false,
       individual_link: true
@@ -58,16 +50,8 @@ class Main extends Component {
   }
 
   addCoin(coin) {
-    let new_coin = {
-      coin_code: coin.coin_code,
-      amount: coin.amount,
-      bought_at: coin.bought_at
-    }
-
-    if (new_coin.coin_code === '' || new_coin.amount === undefined || new_coin.bought_at === undefined ) return
-
     this.setState(prevState => ({
-      coins: [...prevState.coins, new_coin]
+      coins: [...prevState.coins, coin]
     }))
   }
 
