@@ -3,7 +3,6 @@ import './Main.css'
 
 import { formatToMoney, coinsFromUrlParser } from '../utilities/coinHelper'
 
-
 import Form from './form/form'
 import Coin from './coin/coin'
 
@@ -38,7 +37,7 @@ class Main extends Component {
   }
 
   setFromParams() {
-    coinsFromUrlParser().map(coin => this.addCoinToState(coin))//this.addCoinToState(coin))
+    coinsFromUrlParser().map(coin => this.addCoinToState(coin))
   }
 
   addCoinToState(coin) {
@@ -103,9 +102,7 @@ class Main extends Component {
         <h3 className="total-value">Total Value: {formatToMoney(total_value)}</h3>
         { form }
         { form_controls }
-        <div className="Coins">
-          {coin_sections}
-        </div>
+        <div className="Coins">{coin_sections}</div>
       </div>
     );
   }

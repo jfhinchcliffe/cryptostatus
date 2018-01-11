@@ -1,7 +1,12 @@
 .App {  
+  /* margin: 2em; */
   display: grid;
+  grid-column-gap: 10px;
+  grid-row-gap: 15px;
   grid-template-columns: auto;
-  grid-template-rows: 100px 500px auto;
-  background-color: aliceblue;
+  justify-items: center;
+  align-items: center;
+  justify-content: center;
+  background-color: beige;
 }
 

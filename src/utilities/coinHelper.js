@@ -1,5 +1,3 @@
-const constructCoin = (coin_code) => `https://min-api.cryptocompare.com/data/price?fsym=${coin_code}&tsyms=AUD`
-
 const tallyCoinValue = (coins) => {
   console.log('coins', coins)
 }
@@ -10,8 +8,9 @@ const formatToMoney = (number) => {
 
 const coinsFromUrlParser = () => {
   let url_parts = window.location.href.split('?').filter(val => val)
-  if (url_parts.length < 2) return
-  const root_url = url_parts.shift()
+  console.log('URLPARTS', url_parts)
+  if (url_parts.length < 2) return []
+  url_parts.shift()
   return url_parts.map(section => createCoin(section.split('&')))
 }
 

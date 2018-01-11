@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './Coin.css'
-import axios from 'axios'
 import { callCoinApi } from '../../utilities/api'
 import { formatToMoney } from '../../utilities/coinHelper'
 
