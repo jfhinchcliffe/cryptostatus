@@ -3,11 +3,14 @@ import './Coin.css'
 import { callCoinApi } from '../../utilities/api'
 import { formatToMoney } from '../../utilities/coinHelper'
 
+import DeleteIcon from 'material-ui/svg-icons/action/delete-forever';
+
 class Coin extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      code: this.props.coin_code, 
+      code: this.props.coin_code,
+      coin_index: this.props.id,
       coin_value: 0,
       current_value: 0,
       initial_value: 0,
@@ -66,9 +69,8 @@ class Coin extends Component {
         <div className="dot2"></div>
       </div>
     )
-
     const coinInformation = (
-      <div className="Coin">
+      <div className="Coin" onClick={this.props.removeCoin} >
         <h2>{amount} x {coin_code}</h2>
           <p>
             Initial Cost: { formatToMoney(initial_value) }
@@ -76,6 +78,9 @@ class Coin extends Component {
             Current Value: { formatToMoney(current_value) }
           </p>
         <h3 className={textColor}>Profit: { formatToMoney(profit) }</h3>
+        <div className='delete_icon'>
+          <DeleteIcon onClick={this.props.removeCoin} />
+        </div>
       </div>
     )
 

@@ -24,6 +24,7 @@ class Main extends Component {
     this.addCoin = this.addCoin.bind(this)
     this.toggleFormOpen = this.toggleFormOpen.bind(this)
     this.updateTotal = this.updateTotal.bind(this)
+    this.removeCoinFromState = this.removeCoinFromState.bind(this)
   }
 
   componentDidMount() {
@@ -51,6 +52,13 @@ class Main extends Component {
   addCoin(coin) {
     this.setState(prevState => ({
       coins: [...prevState.coins, coin]
+    }))
+  }
+
+  removeCoinFromState(location) {
+    const new_coins = this.state.coins.filter((coin, index) => index !== location)
+    this.setState(prevState => ({
+      coins: new_coins
     }))
   }
 
@@ -92,7 +100,7 @@ class Main extends Component {
       </div>
     )
 
-    const coin_sections = coins.map((coin, index) =>  <Coin key={`${index}-${coin.coin_code}`} coin={coin} updateTotal={this.updateTotal}/>)
+    const coin_sections = coins.map((coin, index) =>  <Coin key={`${index}-${coin.coin_code}`} coin={coin} updateTotal={this.updateTotal} removeCoin={() => this.removeCoinFromState(index)} id={index} />)
 
     const form = form_open ? <Form addCoin={this.addCoin} /> : ''
 

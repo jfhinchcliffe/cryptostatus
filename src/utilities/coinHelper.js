@@ -8,7 +8,6 @@ const formatToMoney = (number) => {
 
 const coinsFromUrlParser = () => {
   let url_parts = window.location.href.split('?').filter(val => val)
-  console.log('URLPARTS', url_parts)
   if (url_parts.length < 2) return []
   url_parts.shift()
   return url_parts.map(section => createCoin(section.split('&')))
