@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
+import DropDownMenu from 'material-ui/DropDownMenu';
+import MenuItem from 'material-ui/MenuItem';
+
+import { callCoinList } from '../../utilities/api'
 
 import './Form.css'
 
@@ -8,6 +12,9 @@ class Form extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      selected_value: 'Choose a coin...',
+      dropdown_disabled: true,
+      dropdown_values: [],
       coin_code: '',
       amount: '',
       bought_at: ''
@@ -15,6 +22,10 @@ class Form extends Component {
 
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
+  }
+
+  componentDidMount() {
+    this.getDropdownValues()
   }
 
   handleChange = event => this.setState({[event.target.id]: event.target.value})
@@ -29,17 +40,40 @@ class Form extends Component {
     this.setState({coin_code: '', amount: '', bought_at: ''})
   }
 
+
+
+  async getDropdownValues () {
+    const coinInfo = await callCoinList()
+    
+    this.setDropdownValues(coinInfo)
+  }
+
+  setDropdownValues(coinInfo) {
+    const formatted_values = Object.entries(coinInfo).map(val => ({value: val['1']['Symbol'], primaryText: val['1']['FullName'] }))
+    this.setState({
+      dropdown_values: formatted_values,
+      dropdown_disabled: false
+    })
+  }
+
+
   render() {
+
+    const styles = {
+      customWidth: {
+        width: 300,
+      },
+    };
+  
+    const menuItemValues = this.state.dropdown_values.map(ddv => (<MenuItem value={ddv.value} primaryText={ddv.primaryText} />))
+
     return (
       <div className="Form">
         <form onSubmit={this.handleSubmit}>
-          <TextField
-            hintText='eg. BTC'
-            floatingLabelText='coin code'
-            id="coin_code"
-            value={this.state.coin_code} 
-            onChange={this.handleChange}
-          />
+          <DropDownMenu maxHeight={300} id="selected_value" value={this.state.selected_value} onChange={this.handleChange} disabled={this.props.dropdown_disabled} style={styles.customWidth} autoWidth={false} >
+            {menuItemValues}
+          </DropDownMenu>
+          
           <br/>
           <TextField
             hintText='eg. 100'

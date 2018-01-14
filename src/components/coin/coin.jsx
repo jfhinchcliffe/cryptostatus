@@ -16,7 +16,7 @@ class Coin extends Component {
     }
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     this.getValues()
   }
 
